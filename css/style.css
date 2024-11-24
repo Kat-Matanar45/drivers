@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("../img/fon.jpg");
+    background-repeat: no-repeat;
+}
+
+.container {
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.data_entry {
+    display: grid;
+    justify-content: left;
+    gap: 20px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    width: 1300px;
+    height: 100%;
+}
+
+.data_entry__main {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+}
+
+.data_entry__kids {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+}
+
+.data_entry__position {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+}
+
+.btn__add {
+    margin: 0 auto;
+}
+
+.add {
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    background-color: white;
+}
+
+.table {
+    width: 1300px;
+    background-color: aliceblue;
+    border: 1px solid black;
+}
+
+.table__title {
+    font-size: 25px;
+    padding-bottom: 20px;
+}
+
+.table th {
+    min-width: 30px;
+    border: 1px solid black;
+}
+
+.table td {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.delete {
+    width: 100%;
+    text-align: center;
+    background-color: white;
+}

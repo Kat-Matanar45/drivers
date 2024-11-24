@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js" defer></script>
+    <title>Мой маленький проект</title>
+</head>
+<body>
+<main>
+    <div class="container">
+    <section class="data_entry">
+        <div class="data_entry__main">
+            <label for="name">Введите данные сотрудника:</label>
+            <input id="surname" type="text" placeholder="Фамилия">
+            <input id="name" type="text" placeholder="Имя">
+            <input id="patronymic" type="text" placeholder="Отчество">
+            <input id="age" type="number" placeholder="Возраст">
+            <input id="tel" type="tel" placeholder="Телефон">
+        </div>
+        <div class="data_entry__kids">
+            <p class="kids__title">Количество детей:</p>
+
+            <form id="checkboxForm">
+                <label>
+                    <input type="checkbox" class="single-check" value="1"> 1
+                </label>
+                <label>
+                    <input type="checkbox" class="single-check" value="2"> 2
+                </label>
+                <label>
+                    <input type="checkbox" class="single-check" value="3"> 3
+                </label>
+                <label>
+                    <input type="checkbox" class="single-check" value="4"> 4 и более
+                </label>
+            </form>
+        </div>
+        <div class="data_entry__position">
+            <p class="position__title">Должность:</p>
+            <select id="position">
+                <option value="0">Выберите вариант</option>
+                <option value="1">Водитель</option>
+                <option value="2">Слесарь</option>
+                <option value="3">Инженер</option>
+            </select>
+        </div>
+        <div class="btn__add">
+        <button class="add">Сохранить</button>
+        </div>
+    </section>
+    <section class="data_table">
+        <table class="table">
+            <caption class="table__title">Реестр сотрудников</caption>
+            <thead>
+            <tr>
+                <th>№ п/п</th>
+                <th>Должность</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Возраст</th>
+                <th>Номер телефона</th>
+                <th>Количество детей</th>
+                <th>Навыки</th>
+                <th>Дополнительно</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table__body">
+
+            </tbody>
+        </table>
+    </section>
+    </div>
+</main>
+</body>
+</html>

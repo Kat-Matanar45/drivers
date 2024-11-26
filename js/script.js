@@ -12,8 +12,8 @@ const checkboxes = document.querySelectorAll('.single-check');
 let selectedValue = 0;
 let numberTr = 0;
 let kidsNum;
-const drivers = [];
-let driversLocal;
+const staff = [];
+let staffLocal;
 
 class Labourer {
     constructor(surname, name, patronymic, age, tel) {
@@ -23,6 +23,11 @@ class Labourer {
     this.age = age
     this.tel = tel
 }
+
+    static generateId() {
+        return Date.now() + Math.random().toString(36).substring(2, 9);
+    }
+
 }
 
 class Driver extends Labourer {
@@ -32,8 +37,8 @@ class Driver extends Labourer {
         this.shop = shop
         this.auto = auto
         this.kids = kids
-        this.id = Driver.generateId();
         this._skills = skills
+        this.id = Labourer.generateId();
     }
 
     static count = 0;
@@ -43,8 +48,30 @@ class Driver extends Labourer {
         return Driver.count;
     }
 
-    static generateId() {
-        return Date.now() + Math.random().toString(36).substring(2, 9);
+    get skills() {
+        return this._skills
+    }
+
+    set skills(str) {
+        this.skills.push(str)
+    }
+}
+
+class Engineer extends Labourer {
+    constructor(surname, name, patronymic, age, tel, kids, role, shop, skills = []) {
+        super(surname, name, patronymic, age, tel)
+        this.role = role
+        this.shop = shop
+        this.kids = kids
+        this._skills = skills
+        this.id = Labourer.generateId();
+    }
+
+    static count = 0;
+
+    static numberAuto() {
+        Engineer.count++;
+        return Engineer.count;
     }
 
     get skills() {
@@ -59,13 +86,24 @@ class Driver extends Labourer {
 const addElement = () => {
     numberTr++;
     if (selectedValue === 1) {addDriver()}
+    if (selectedValue === 2) {addEngineer()}
+    surname.value = '';
+    name.value = '';
+    patronymic.value = '';
+    age.value = '';
+    tel.value = '';
+    selectOption.value = "0";
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false
+    });
 }
 
 const addDriver = () => {
     const driver1 = new Driver(surname.value, name.value, patronymic.value, age.value, tel.value, kidsNum,'Водитель', 1, Driver.numberAuto());
     driver1.skills = "Вождение в зимних условиях";
     driver1.skills = "Категория C";
-    drivers.push(driver1);
+    staff.push(driver1);
     const addTr = document.createElement('tr');
     addTr.setAttribute('data-id', driver1.id);
     addTr.innerHTML = `<td>${numberTr}</td>
@@ -84,8 +122,34 @@ const addDriver = () => {
                 </td>`
     tableBody.appendChild(addTr);
 
-    driversLocal = JSON.stringify(drivers);
-    localStorage.setItem('drivers', JSON.stringify(drivers));
+    staffLocal = JSON.stringify(staff);
+    localStorage.setItem('staff', JSON.stringify(staff));
+}
+
+const addEngineer = () => {
+    const engineer1 = new Engineer(surname.value, name.value, patronymic.value, age.value, tel.value, kidsNum,'Инженер', 1);
+    engineer1.skills = "Допуск к работе на высоте";
+    engineer1.skills = "Допуск к секретным разработкам";
+    staff.push(engineer1);
+    const addTr = document.createElement('tr');
+    addTr.setAttribute('data-id', engineer1.id);
+    addTr.innerHTML = `<td>${numberTr}</td>
+                <td>${engineer1.role}</td>
+                <td>${engineer1.surname}</td>
+                <td>${engineer1.name}</td>
+                <td>${engineer1.patronymic}</td>
+                <td>${engineer1.age}</td>
+                <td>${engineer1.tel}</td>
+                <td>${engineer1.kids}</td>
+                <td>${engineer1.skills.join(", ")}</td>
+                <td>Цех № ${engineer1.shop}</td>
+                <td>
+                    <button class="delete">Удалить</button>
+                </td>`
+    tableBody.appendChild(addTr);
+
+    staffLocal = JSON.stringify(staff);
+    localStorage.setItem('staff', JSON.stringify(staff));
 }
 
 const inputText = (e) => {
@@ -138,13 +202,16 @@ tableBody.addEventListener('click', (event) => {
 
         numberTr = rows.length;
 
-        const index = drivers.findIndex(driver => driver.id === id);
+        let index;
+        if (selectedValue === 1) {index = staff.findIndex(driver => driver.id === id)};
+        if (selectedValue === 2) {index = staff.findIndex(engineer => engineer.id === id)};
+
         if (index !== -1) {
-            drivers.splice(index, 1);
+            staff.splice(index, 1);
         }
     }
-        driversLocal = JSON.stringify(drivers);
-        localStorage.setItem('drivers', JSON.stringify(drivers));
+        staffLocal = JSON.stringify(staff);
+        localStorage.setItem('staff', JSON.stringify(staff));
 })
 
 

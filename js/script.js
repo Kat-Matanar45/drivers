@@ -5,10 +5,8 @@ const name = document.querySelector('#name');
 const patronymic = document.querySelector('#patronymic');
 const age = document.querySelector('#age');
 const tel = document.querySelector('#tel');
-const inputSelect = document.querySelectorAll('.data_entry__kids input');
 const selectOption = document.querySelector('#position');
 const btnAdd = document.querySelector('.add');
-const btnDel = document.querySelector('.delete');
 const tableBody = document.querySelector('.table__body');
 const checkboxes = document.querySelectorAll('.single-check');
 let selectedValue = 0;
@@ -89,6 +87,21 @@ const addDriver = () => {
     driversLocal = JSON.stringify(drivers);
     localStorage.setItem('drivers', JSON.stringify(drivers));
 }
+
+const inputText = (e) => {
+    e.target.value = e.target.value.replace(/[^а-яА-Я\s\-]+/, '')
+};
+
+surname.addEventListener('input', inputText);
+name.addEventListener('input', inputText);
+patronymic.addEventListener('input', inputText);
+age.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d]+/, '')
+});
+tel.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d\-\+\(\)]+/, '')
+})
+
 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {

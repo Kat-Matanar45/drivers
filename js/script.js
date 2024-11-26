@@ -11,7 +11,7 @@ const tableBody = document.querySelector('.table__body');
 const checkboxes = document.querySelectorAll('.single-check');
 let selectedValue = 0;
 let numberTr = 0;
-let kidsNum;
+let kidsNum = 0;
 const staff = [];
 let staffLocal;
 
@@ -83,20 +83,34 @@ class Engineer extends Labourer {
     }
 }
 
-const addElement = () => {
-    numberTr++;
-    if (selectedValue === 1) {addDriver()}
-    if (selectedValue === 2) {addEngineer()}
-    surname.value = '';
-    name.value = '';
-    patronymic.value = '';
-    age.value = '';
-    tel.value = '';
-    selectOption.value = "0";
+const ban = () => {
+    if ((surname.value !== '') && (name.value !== '') && (patronymic.value !== '') && (age.value !== '') && (tel.value !== '') && (selectedValue !== 0)) {
+        if (age.value > 150) {
+            alert(`Введен некорректный возраст!`)
+        } else {addElement()}
+    } else {alert(`Заполните все данные!`)}
+}
 
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false
-    });
+const addElement = () => {
+
+        numberTr++;
+        if (selectedValue === 1) {
+            addDriver()
+        }
+        if (selectedValue === 2) {
+            addEngineer()
+        }
+        surname.value = '';
+        name.value = '';
+        patronymic.value = '';
+        age.value = '';
+        tel.value = '';
+        selectOption.value = "0";
+        selectedValue = 0;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false
+        });
 }
 
 const addDriver = () => {
@@ -176,6 +190,9 @@ checkboxes.forEach(checkbox => {
                 }
             });
             kidsNum = checkbox.value;
+            } else {
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            kidsNum = anyChecked ? kidsNum : 0;
         }
     });
 });
@@ -185,7 +202,7 @@ selectOption.addEventListener('change', (event) => {
     console.log(`Выбранное значение: ${selectedValue}`);
     return selectedValue;
 });
-btnAdd.addEventListener('click', addElement);
+btnAdd.addEventListener('click', ban);
 tableBody.addEventListener('click', (event) => {
     if (event.target.classList.contains('delete')) {
         const row = event.target.closest('tr');

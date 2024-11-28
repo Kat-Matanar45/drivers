@@ -170,6 +170,36 @@ const inputText = (e) => {
     e.target.value = e.target.value.replace(/[^а-яА-Я\s\-]+/, '')
 };
 
+const loadTableFromLocalStorage = () => {
+    const storedData = localStorage.getItem('staff');
+    if (storedData) {
+        const savedStaff = JSON.parse(storedData);
+        staff.push(...savedStaff); // Восстанавливаем массив staff из localStorage
+        numberTr = staff.length; // Обновляем счетчик строк
+
+        staff.forEach((member, index) => {
+            const addTr = document.createElement('tr');
+            addTr.setAttribute('data-id', member.id);
+            addTr.innerHTML = `<td>${index + 1}</td>
+                <td>${member.role}</td>
+                <td>${member.surname}</td>
+                <td>${member.name}</td>
+                <td>${member.patronymic}</td>
+                <td>${member.age}</td>
+                <td>${member.tel}</td>
+                <td>${member.kids || 0}</td>
+                <td>${member._skills ? member._skills.join(", ") : ''}</td>
+                <td>
+                    ${member.role === 'Водитель' ? `Автомобиль № ${member.auto} Склад № ${member.shop}` : `Цех № ${member.shop}`}
+                </td>
+                <td>
+                    <button class="delete">Удалить</button>
+                </td>`;
+            tableBody.appendChild(addTr);
+        });
+    }
+};
+
 surname.addEventListener('input', inputText);
 name.addEventListener('input', inputText);
 patronymic.addEventListener('input', inputText);
@@ -179,7 +209,7 @@ age.addEventListener('input', (e) => {
 tel.addEventListener('input', (e) => {
     e.target.value = e.target.value.replace(/[^\d\-\+\(\)]+/, '')
 })
-
+document.addEventListener('DOMContentLoaded', loadTableFromLocalStorage);
 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', () => {
@@ -199,7 +229,6 @@ checkboxes.forEach(checkbox => {
 
 selectOption.addEventListener('change', (event) => {
     selectedValue = Number(event.target.value);
-    console.log(`Выбранное значение: ${selectedValue}`);
     return selectedValue;
 });
 btnAdd.addEventListener('click', ban);
